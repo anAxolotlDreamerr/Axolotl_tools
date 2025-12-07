@@ -57,7 +57,7 @@ public class Unzip {
             byte[] b = new byte[1024*1024*100];
             int len;
             while((len = inputStream.read(b)) !=-1){
-                outputStream.write(b);
+                outputStream.write(b,0,len);
             }
             outputStream.close();
             inputStream.close();
