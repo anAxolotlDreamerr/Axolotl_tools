@@ -1,8 +1,11 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.PushbackInputStream;
+package tool;
+
+import java.io.*;
 
 public class IO {
     public static BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
-    public static PushbackInputStream pushinput = new PushbackInputStream(System.in);
+    public static InputStream inputStream = System.in;
+    public static String bufferedInput() throws Exception{
+        return input.readLine().replaceAll("[\\n\\r\"]","");
+    }
 }
