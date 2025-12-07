@@ -73,7 +73,7 @@ public class Compress {
             ZipEntry zipEntry = new ZipEntry(name);
             zipOutput.putNextEntry(zipEntry);
             int len;
-            byte[] b = new byte[1000];
+            byte[] b = new byte[1024*1024*100];
             while ((len = input.read(b)) != -1) {
                 zipOutput.write(b,0,len);
             }
