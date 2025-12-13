@@ -11,42 +11,53 @@ public class Unzip {
     private static String path;
     private static ZipInputStream zipInput;
     private static ZipFile zipfile;
-
+    private static int zipFiles;
+    private static int finishFiles;
     private Unzip(){}
     public static void unzip(){
         try {
+            zipFiles = 0;
+            finishFiles= 0;
+            path = null;
+            zipfile =null;
+            zipInput = null;
             System.out.println("Please enter Zip path:(enter \"stop\" to stop)");
             String zipFile = IO.bufferedInput();
             if (zipFile.equals("stop")||zipFile.equals("Stop")){
-                path =null;
-                zipFile = null;
                 return;
             }
             System.out.println("Please enter path:(enter \"stop\" to stop)");
             path = IO.bufferedInput();
             if (path.equals("stop")||path.equals("Stop")){
-                path =null;
-                zipFile = null;
                 return;
             }
             if(!path.matches("\\$")){
                 path = path+"\\";
             }
+            long time1 = System.currentTimeMillis();
             zipfile = new ZipFile(zipFile);
-            zipInput = new ZipInputStream(new FileInputStream(zipFile));
+            File zip =new File(zipFile);
+            zipInput = new ZipInputStream(new FileInputStream(zip));
+            zipFiles = numberOfFiles(zip);
             IO(zipInput.getNextEntry());
+            long fileSize = Compress.calculateTheSize(new File(path));
+            long time2 = System.currentTimeMillis();
+            System.out.printf("Unzipped Size:%.3fMB;Take:%.3fs\n",(float)fileSize/(1024*1024),(float)(time2-time1)/1000);
             zipInput.close();
         }catch (Exception e){
             System.out.println("Wrong!Please enter again!");
             System.err.println(e);
-            path = null;
-            zipfile =null;
-            zipInput = null;
             unzip();
         }
-        path = null;
-        zipfile =null;
-        zipInput = null;
+    }
+    public static int numberOfFiles(File zip) throws Exception{
+        int num=0;
+        ZipEntry zipEntry =null;
+        ZipInputStream zipInput = new ZipInputStream(new FileInputStream(zip));
+        while((zipEntry = zipInput.getNextEntry())!=null){
+            num++;
+        }
+        return num;
     }
     private static void IO(ZipEntry zipEntry) throws Exception{
         if(zipEntry != null) {
@@ -54,15 +65,20 @@ public class Unzip {
             file.getParentFile().mkdirs();
             OutputStream outputStream = new FileOutputStream(file);
             InputStream inputStream = zipfile.getInputStream(zipEntry);
-            byte[] b = new byte[1024*1024*100];
+            byte[] b = new byte[64 * 1024];
             int len;
             while((len = inputStream.read(b)) !=-1){
                 outputStream.write(b,0,len);
             }
             outputStream.close();
             inputStream.close();
+            finishFiles ++;
+            if(zipFiles != 0){
+                System.out.printf("Adding:%s---size:%.2fKB(progress:%.2f%%)\n",zipEntry.getName(),(float)file.length()/(1024),(float)100*finishFiles/zipFiles);
+            } else {
+                System.out.printf("Adding:%s---size:%.2fKB(progress:%.2f%%)\n",zipEntry.getName(),(float)file.length()/(1024),100.00f);
+            }
             IO(zipInput.getNextEntry());
         }
     }
-
 }
