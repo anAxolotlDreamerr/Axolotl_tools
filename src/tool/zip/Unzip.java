@@ -44,6 +44,7 @@ public class Unzip {
             long time2 = System.currentTimeMillis();
             System.out.printf("Unzipped Size:%.3fMB;Take:%.3fs\n",(float)fileSize/(1024*1024),(float)(time2-time1)/1000);
             zipInput.close();
+            zipfile.close();
         }catch (Exception e){
             System.out.println("Wrong!Please enter again!");
             System.err.println(e);
