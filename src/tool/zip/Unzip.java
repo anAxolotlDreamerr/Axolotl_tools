@@ -1,6 +1,7 @@
 package tool.zip;
 
 import tool.IO;
+import tool.language.Language;
 
 import java.io.*;
 import java.util.zip.ZipEntry;
@@ -21,12 +22,12 @@ public class Unzip {
             path = null;
             zipfile =null;
             zipInput = null;
-            System.out.println("Please enter Zip path:(enter \"stop\" to stop)");
+            System.out.println(Language.getText("UnzipFirst"));
             String zipFile = IO.bufferedInput();
             if (zipFile.equals("stop")||zipFile.equals("Stop")){
                 return;
             }
-            System.out.println("Please enter path:(enter \"stop\" to stop)");
+            System.out.println(Language.getText("UnzipSecond"));
             path = IO.bufferedInput();
             if (path.equals("stop")||path.equals("Stop")){
                 return;
@@ -42,11 +43,11 @@ public class Unzip {
             IO(zipInput.getNextEntry());
             long fileSize = Compress.calculateTheSize(new File(path));
             long time2 = System.currentTimeMillis();
-            System.out.printf("Unzipped Size:%.3fMB;Take:%.3fs\n",(float)fileSize/(1024*1024),(float)(time2-time1)/1000);
+            System.out.printf(Language.getText("UnzipThird")+'\n',(float)fileSize/(1024*1024),(float)(time2-time1)/1000);
             zipInput.close();
             zipfile.close();
         }catch (Exception e){
-            System.out.println("Wrong!Please enter again!");
+            System.out.println(Language.getText("EnterWrong"));
             System.err.println(e);
             unzip();
         }
@@ -75,9 +76,9 @@ public class Unzip {
             inputStream.close();
             finishFiles ++;
             if(zipFiles != 0){
-                System.out.printf("Adding:%s---size:%.2fKB(progress:%.2f%%)\n",zipEntry.getName(),(float)file.length()/(1024),(float)100*finishFiles/zipFiles);
+                System.out.printf(Language.getText("UnzipFourth")+'\n',zipEntry.getName(),(float)file.length()/(1024),(float)100*finishFiles/zipFiles);
             } else {
-                System.out.printf("Adding:%s---size:%.2fKB(progress:%.2f%%)\n",zipEntry.getName(),(float)file.length()/(1024),100.00f);
+                System.out.printf(Language.getText("UnzipFourth")+'\n',zipEntry.getName(),(float)file.length()/(1024),100.00f);
             }
             IO(zipInput.getNextEntry());
         }

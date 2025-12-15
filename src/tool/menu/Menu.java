@@ -1,6 +1,7 @@
 package tool.menu;
 
 import tool.IO;
+import tool.language.Language;
 
 public  class Menu {
     private int len =0;
@@ -19,11 +20,11 @@ public  class Menu {
     }
     public int menu(){
         if(sign) {
-            text = text.append("Please Enter Number:\n");
+            text = text.append(Language.getText("MenuFirst") +'\n');
             for (int i = 0; i < choices.length - 1; i++) {
                 text = text.append((i + 1) + "." + choices[i] + "\n");
             }
-            text.append("Enter \"" + choices[choices.length - 1] + "\" to " + choices[choices.length - 1]);
+            text.append(Language.getText("Enter")+"\"" + choices[choices.length - 1] + "\" "+Language.getText("to") + choices[choices.length - 1]);
             sign =false;
         }
         System.out.println(text);

@@ -1,5 +1,7 @@
 package tool.zip;
 import tool.IO;
+import tool.language.Language;
+
 import java.io.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -20,14 +22,14 @@ public class Compress {
             compressedSize =0;
             initialName =null;
             initialPath = null;
-            System.out.println("((enter \"stop\" to stop))Please enter file path:(example:A:\\text\\text\\ or A:\\text\\text.text)");
+            System.out.println(Language.getText("CompressFirst"));
             String filePath = IO.bufferedInput();
             if (filePath.equals("stop")||filePath.equals("Stop")){
                 initialName =null;
                 initialPath = null;
                 return;
             }
-            System.out.println("Please enter zip Path:(enter \"stop\" to stop)");
+            System.out.println(Language.getText("CompressSecond"));
             String zipPath = IO.bufferedInput();
             if (zipPath.equals("stop")||zipPath.equals("Stop")){
                 initialName =null;
@@ -45,7 +47,7 @@ public class Compress {
             File zipFile = new File(zipPath);
             zipFile.getParentFile().mkdirs();
             zipOutput = new ZipOutputStream(new FileOutputStream(zipPath));
-            System.out.println("Please enter zip comment:");
+            System.out.println(Language.getText("CompressThird"));
             String comment = IO.bufferedInput();
             long time1 = System.currentTimeMillis();
             zipOutput.setComment(comment);
@@ -55,13 +57,13 @@ public class Compress {
             io(file);
             long time2 = System.currentTimeMillis();
             if(totalSize != 0) {
-                System.out.printf("Complete!Original Size:%.3fMB; Zip Size:%.3fMB; Compression Ratio:%.2f%% ;Take:%.3fs\n", (float)totalSize/(1024*1024), (float)useSize/(1024*1024), (float) 100 * useSize / totalSize,(float)(time2-time1)/1000);
+                System.out.printf(Language.getText("CompressFourth")+'\n', (float)totalSize/(1024*1024), (float)useSize/(1024*1024), (float) 100 * useSize / totalSize,(float)(time2-time1)/1000);
             }else {
-                System.out.printf("Complete!Original Size:%.3fMB; Zip Size:%.3fMB; Compression Ratio:%.2f%%;Take:%.3fs\n", (float)totalSize/(1024*1024), (float)useSize/(1024*1024), 100.00f,(float)(time2-time1)/1000);
+                System.out.printf(Language.getText("CompressFourth")+'\n', (float)totalSize/(1024*1024), (float)useSize/(1024*1024), 100.00f,(float)(time2-time1)/1000);
             }
             zipOutput.close();
         }catch (Exception e){
-            System.out.println("Please enter again");
+            System.out.println(Language.getText("EnterWrong"));
             System.err.println(e);
             zipOutput = null;
             compress();
@@ -94,7 +96,7 @@ public class Compress {
             zipOutput.putNextEntry(zipEntry);
             int len;
             byte[] b = new byte[64 * 1024];
-            System.out.printf("Adding:%s---original size:%.3fMB",file.getName(),(float)file.length()/(1024*1024));
+            System.out.printf(Language.getText("CompressFifth"),file.getName(),(float)file.length()/(1024*1024));
             while ((len = input.read(b)) != -1) {
                 zipOutput.write(b,0,len);
             }
@@ -105,9 +107,9 @@ public class Compress {
             temp += zipEntry.getCompressedSize();
             useSize +=zipEntry.getCompressedSize();
             if(file.length() != 0) {
-                System.out.printf("; compressed size:%.2fKB  (Compression ratio:%.2f%%; progress:%.2f%%)\n", (float)temp/1024, ((float) 100*temp / file.length()),((float)100*compressedSize/totalSize));
+                System.out.printf(Language.getText("CompressSixth")+'\n', (float)temp/1024, ((float) 100*temp / file.length()),((float)100*compressedSize/totalSize));
             }else {
-                System.out.printf("; compressed size:%.2fkB  (Compression ratio:%.2f%%; progress:%.2f%%)\n", (float)temp/1024, 100.00f,((float)100*compressedSize/totalSize));
+                System.out.printf(Language.getText("CompressSixth")+'\n', (float)temp/1024, 100.00f,((float)100*compressedSize/totalSize));
             }
         }
     }
