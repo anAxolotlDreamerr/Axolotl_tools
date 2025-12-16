@@ -5,7 +5,7 @@ import tool.zip.ZipMenu;
 
 
 public class MainMenu {
-    private static Menu menu = new Menu(Language.getText("Compress")+"/"+ Language.getText("Extract"),Language.getText("language"),"exit");
+    private static Menu menu = new Menu("Compress/Extract","language","exit");
     private MainMenu(){};
     public static void start() {
         while(true){

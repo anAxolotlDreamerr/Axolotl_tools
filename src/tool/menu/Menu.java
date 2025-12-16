@@ -4,10 +4,12 @@ import tool.IO;
 import tool.language.Language;
 
 public  class Menu {
+    private static int counter = 1;
+    private int nativeCounter= 0;
+    private static Menu[] menus;
     private int len =0;
     private String[] choices;
     private StringBuffer text = new StringBuffer();
-    private boolean sign =true;
     public Menu(String... choices){
         this.choices = choices;
     }
@@ -19,13 +21,14 @@ public  class Menu {
 
     }
     public int menu(){
-        if(sign) {
+        if(nativeCounter != counter) {
+            text.delete(0,text.length());
             text = text.append(Language.getText("MenuFirst") +'\n');
             for (int i = 0; i < choices.length - 1; i++) {
-                text = text.append((i + 1) + "." + choices[i] + "\n");
+                text = text.append((i + 1) + "." + Language.getText(choices[i]) + "\n");
             }
-            text.append(Language.getText("Enter")+"\"" + choices[choices.length - 1] + "\" "+Language.getText("to") + choices[choices.length - 1]);
-            sign =false;
+            text.append(Language.getText("Enter")+"\"" + choices[choices.length - 1] + "\" "+Language.getText("to") + Language.getText(choices[choices.length - 1])+"\n");
+            nativeCounter = counter;
         }
         System.out.println(text);
             int num =0;
@@ -42,5 +45,11 @@ public  class Menu {
                 return num;
             }
             return num;
+    }
+    public static void count(){
+        counter++;
+    }
+    public boolean countEqual(){
+        return this.nativeCounter == counter;
     }
 }

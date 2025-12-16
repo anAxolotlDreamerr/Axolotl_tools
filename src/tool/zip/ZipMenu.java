@@ -3,10 +3,9 @@ import tool.language.Language;
 import tool.menu.Menu;
 
 public class ZipMenu {
-
+    private static final Menu menu = new Menu("Compress","Extract","back");
     private ZipMenu(){}
     public static void menu(){
-        Menu menu = new Menu(Language.getText("Compress"),Language.getText("Extract"),"back");
         while(true){
             int num = menu.menu();
             switch (num){
