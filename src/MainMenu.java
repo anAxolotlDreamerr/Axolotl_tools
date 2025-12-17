@@ -21,8 +21,7 @@ public class MainMenu {
                     System.out.println(Language.getText("EnterWrong"));
                     break;
                 case -1:
-                    System.exit(1);
-                    break;
+                    return;
                 default:
                     System.out.println(Language.getText("NullChoices"));
                     break;

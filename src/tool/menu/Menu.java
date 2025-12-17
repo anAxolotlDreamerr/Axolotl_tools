@@ -27,7 +27,7 @@ public  class Menu {
             for (int i = 0; i < choices.length - 1; i++) {
                 text = text.append((i + 1) + "." + Language.getText(choices[i]) + "\n");
             }
-            text.append(Language.getText("Enter")+"\"" + choices[choices.length - 1] + "\" "+Language.getText("to") + Language.getText(choices[choices.length - 1])+"\n");
+            text.append(Language.getText("Enter")+"\"" + choices[choices.length - 1] + "\" "+Language.getText("to") + Language.getText(choices[choices.length - 1]));
             nativeCounter = counter;
         }
         System.out.println(text);

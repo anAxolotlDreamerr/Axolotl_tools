@@ -12,34 +12,35 @@ public class Language {
     private static final Locale zh_TW = new Locale("zh","TW");
     private static final Locale ja_JP = new Locale("ja","JP");
     private static final Locale fr_FR = new Locale("fr","FR");
+    private static final String baseName = "resources.lang.text";
     //private static ResourceBundle Using = ResourceBundle.getBundle("text",Locale.getDefault());
-    private static ResourceBundle Using = ResourceBundle.getBundle("text",Locale.getDefault(),new UTF8Control());
+    private static ResourceBundle Using = ResourceBundle.getBundle(baseName,Locale.getDefault(),new UTF8Control());
     private Language(){};
     public static void language(){
         while (true) {
             switch (langugeMenu.menu()) {
                 case 1:
-                    Using = ResourceBundle.getBundle("text", en_US);
+                    Using = ResourceBundle.getBundle(baseName, en_US);
                     System.out.printf(getText("changeLanguage")+"\n","en_US");
                     Menu.count();
                     break;
                 case 2:
-                    Using = ResourceBundle.getBundle("text", zh_CN);
+                    Using = ResourceBundle.getBundle(baseName, zh_CN);
                     System.out.printf(getText("changeLanguage")+"\n","zh_CN");
                     Menu.count();
                     break;
                 case 3:
-                    Using = ResourceBundle.getBundle("text", zh_TW);
+                    Using = ResourceBundle.getBundle(baseName, zh_TW);
                     System.out.printf(getText("changeLanguage")+"\n","zh_TW");
                     Menu.count();
                     break;
                 case 4:
-                    Using = ResourceBundle.getBundle("text", ja_JP);
+                    Using = ResourceBundle.getBundle(baseName, ja_JP);
                     System.out.printf(getText("changeLanguage")+"\n","ja_JP");
                     Menu.count();
                     break;
                 case 5:
-                    Using = ResourceBundle.getBundle("text", fr_FR);
+                    Using = ResourceBundle.getBundle(baseName, fr_FR);
                     System.out.printf(getText("changeLanguage")+"\n","fr_FR");
                     Menu.count();
                     break;
